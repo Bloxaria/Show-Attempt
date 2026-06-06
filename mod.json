@@ -1,17 +1,52 @@
 {
-	"geode": "$GEODE_VERSION",
-	"gd": {
-		"win": "2.2081",
-		"android": "2.2081",
-		"mac": "2.2081",
-		"ios": "2.2081"
-	},
-	"id": "$MOD_ID",
-	"name": "$MOD_NAME",
-	"version": "$MOD_VERSION",
-	"developer": "$MOD_DEVELOPER",
-	"description": "$MOD_DESCRIPTION",
-	"dependencies": {
-		"geode.node-ids": ">=v1.23.3"
-	}
+    "geode": "3.0.0",
+    "id": "bloxaria.show_attempt",
+    "version": "1.0.0",
+    "name": "Show-Attempt & Noclip Pro",
+    "developer": "Bloxaria",
+    "description": "Un menu complet comprenant un Noclip personnalisable, un compteur de tentatives manquées (Safe/Warn), un flash d'impact et une limite de morts.",
+    "dependencies": [
+        {
+            "id": "geode.loader",
+            "version": ">=3.0.0"
+        }
+    ],
+    "settings": {
+        "noclip": {
+            "name": "Noclip",
+            "type": "bool",
+            "default": false
+        },
+        "show-attempt": {
+            "name": "Show Attempt",
+            "type": "bool",
+            "default": false,
+            "requires": "noclip"
+        },
+        "max-attempt": {
+            "name": "Max Attempt (0 = Infini)",
+            "type": "int",
+            "default": 0,
+            "min": 0,
+            "requires": "noclip"
+        },
+        "flash-dead": {
+            "name": "FlashDeadAction",
+            "type": "bool",
+            "default": false,
+            "requires": "noclip"
+        },
+        "color-dead": {
+            "name": "ColorDeadAction",
+            "type": "color",
+            "default": [255, 0, 0],
+            "requires": "flash-dead"
+        },
+        "color-legacy": {
+            "name": "ColorLegacyAtt",
+            "type": "bool",
+            "default": false,
+            "requires": "flash-dead"
+        }
+    }
 }
