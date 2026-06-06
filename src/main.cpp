@@ -38,7 +38,7 @@ class $modify(MyPauseLayer, PauseLayer) {
     }
 
     void onOpenModMenu(CCObject* sender) {
-        // Geode UI magique : ouvre automatiquement les paramètres du mod créés par le mod.json
+        // Ouvre automatiquement les paramètres du mod créés par le mod.json
         geode::openSettingsPopup(Mod::get());
     }
 };
@@ -50,7 +50,7 @@ class $modify(MyPlayLayer, PlayLayer) {
     bool init(GJGameLevel* level, bool useReplay, bool dontRunActions) {
         if (!PlayLayer::init(level, useReplay, dontRunActions)) return false;
 
-        // Récupération des options définies dans le menu
+        // Récupération des options définies dans le menu via l'API Geode correcte
         bool noclipEnabled = Mod::get()->getSettingValue<bool>("noclip");
         bool showAttempt = Mod::get()->getSettingValue<bool>("show-attempt");
 
@@ -86,7 +86,7 @@ class $modify(MyPlayLayer, PlayLayer) {
         // Récupération dynamique des paramètres de Geode
         bool noclipEnabled = Mod::get()->getSettingValue<bool>("noclip");
         bool showAttempt = Mod::get()->getSettingValue<bool>("show-attempt");
-        int maxAttempt = Mod::get()->getSettingValue<int>("max-attempt");
+        int maxAttempt = Mod::get()->getSettingValue<int64_t>("max-attempt"); // correction du type int pour Geode
         bool flashDeadAction = Mod::get()->getSettingValue<bool>("flash-dead");
         ccColor3B colorDeadAction = Mod::get()->getSettingValue<ccColor3B>("color-dead");
         bool colorLegacyAtt = Mod::get()->getSettingValue<bool>("color-legacy");
@@ -154,7 +154,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 
     void update(float dt) {
         PlayLayer::update(dt);
-        // On réinitialise la sécurité dès qu'on ne touche plus l'obstacle pour éviter les +1 fantômes
+        // On réinitialise la sécurité dès qu'on ne touche plus l'obstacle
         if (m_player1 && !m_player1->m_isColliding) {
             g_hasTouchedObstacle = false;
         }
@@ -163,7 +163,7 @@ class $modify(MyPlayLayer, PlayLayer) {
     void levelComplete() {
         if (g_isWarned) {
             FLAlertLayer::create("Run Invalide", "Noclip utilisé. Progression non sauvegardée.", "OK")->show();
-            this->onQuit(); // On quitte proprement sans tricher sur le niveau
+            this->onQuit(); 
             return;
         }
         PlayLayer::levelComplete();
